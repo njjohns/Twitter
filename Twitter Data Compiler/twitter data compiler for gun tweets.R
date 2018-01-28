@@ -1,24 +1,42 @@
-##appending all twitter CSV files together###
+###Gun Project-Twitter data###
+###Last updated: 1/28/2018###
 #test
 
-setwd("C:/Users/Nicole/Documents/Twitterdata")
-path = "C:/Users/Nicole/Documents/Twitterdata"
+#set working director to Twitter data folder where all files are stored separately
+dirOfInterest <- "C:/Users/Nicole/Documents/Twitterdata"
+setwd(dirOfInterest)
+path = dirOfInterest
+
+#creates empty dataframe where all individual files will be appended together
 dataTable <- ""
+
+#csv.files is a vector of all the csv file paths from the Twitterdata folder
 csv.files <- dir(path, pattern =".csv")
 
+#Loop that reads in each csv file and appends to dataTable
 for(i in 1:length(csv.files)){
   subTable <- read.csv(csv.files[i],header=TRUE, sep=",", stringsAsFactors=FALSE)
   id <- csv.files[i]
-  subTable$Hashtag <- rep(id, nrow(subTable))
+  #created new var Hashtag that contained file names as values
+  subTable$Hashtag <- rep(id, nrow(subTable))   
   if(ncol(subTable) == 17){
-    subTable$id.1 <- 0
-    subTable <- subTable[, c(1,2,3,4,5,6,7,8,9,18,10,11,12,13,14,15,16,17)]
+    #some files did not have the variable id.1, so had to create a new var for these
+    subTable$id.1 <- 0     
+    subTable <- subTable[, c(1:9,18,10:17)]
   }
   dataTable <- rbind(dataTable, subTable)
 }
 
+##Removes blank row
+dataTable <- dataTable[!apply(dataTable == "", 1, all),]
+
+#Removes the file extension from the values in the variable Hashtag
+dataTable$Hashtag <- gsub(".csv", "", dataTable$Hashtag)
+
 #check how many columns-- if there are 17 columns, add one column at subTable[10] 
 #csv.files[177]
+
+if(FALSE){
 
 #--------------------------------------------------------------------------------------------------------------
 
@@ -78,3 +96,7 @@ View(out.file)
 
 write.table(out.file, file = "cand_Brazil.txt",sep=",", 
             row.names = FALSE, qmethod = "double",fileEncoding="windows-1252")
+
+
+
+}
