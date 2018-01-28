@@ -1,4 +1,5 @@
 ##appending all twitter CSV files together###
+#test
 
 setwd("C:/Users/Nicole/Documents/Twitterdata")
 path = "C:/Users/Nicole/Documents/Twitterdata"
