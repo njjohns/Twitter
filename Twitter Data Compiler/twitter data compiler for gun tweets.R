@@ -36,6 +36,22 @@ dataTable$Hashtag <- gsub(".csv", "", dataTable$Hashtag)
 #check how many columns-- if there are 17 columns, add one column at subTable[10] 
 #csv.files[177]
 
+dataTable$Sentiment <- ifelse(grepl("banassault", dataTable$Hashtag, ignore.case = T), "Gun control", 
+                  ifelse(grepl("twoa", dataTable$Hashtag, ignore.case = T), "Pro gun", 
+                  ifelse(grepl("guncontrol", dataTable$Hashtag, ignore.case=T), "Gun control", 
+                  ifelse(grepl("guncontrolnever", dataTable$Hashtag, ignore.case=T), "Pro gun", 
+                  ifelse(grepl("guncontrolnow", dataTable$Hashtag, ignore.case=T), "Gun control",
+                  ifelse(grepl("gunviolence", dataTable$Hashtag, ignore.case=T), "Gun control", 
+                  ifelse(grepl("endgunviolence", dataTable$Hashtag, ignore.case=T), "Gun control",   
+                  ifelse(grepl("noguncontrol", dataTable$Hashtag, ignore.case=T), "Pro gun", 
+                  ifelse(grepl("secondamendment", dataTable$Hashtag, ignore.case=T), "Pro gun", 
+                  ifelse(grepl("righttobeararm", dataTable$Hashtag, ignore.case=T), "Pro gun", 
+                  ifelse(grepl("gunrights", dataTable$Hashtag, ignore.case=T), "Pro gun", 
+                  ifelse(grepl("twoadefenders", dataTable$Hashtag, ignore.case=T), "Pro gun", "Ambiguous")))))))))))) 
+                    
+                    
+
+
 if(FALSE){
 
 #--------------------------------------------------------------------------------------------------------------
