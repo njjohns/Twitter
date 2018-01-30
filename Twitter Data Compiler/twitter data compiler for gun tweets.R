@@ -36,6 +36,8 @@ dataTable$Hashtag <- gsub(".csv", "", dataTable$Hashtag)
 #check how many columns-- if there are 17 columns, add one column at subTable[10] 
 #csv.files[177]
 
+#Creates a new variable called Sentiment that denotes whether the tweet was pro-gun or pro-gun control based
+#on the hashtag. "grepl" replaces the first term in quotes with the second.
 dataTable$Sentiment <- ifelse(grepl("banassault", dataTable$Hashtag, ignore.case = T), "Gun control", 
                   ifelse(grepl("twoa", dataTable$Hashtag, ignore.case = T), "Pro gun", 
                   ifelse(grepl("guncontrol", dataTable$Hashtag, ignore.case=T), "Gun control", 
@@ -49,70 +51,8 @@ dataTable$Sentiment <- ifelse(grepl("banassault", dataTable$Hashtag, ignore.case
                   ifelse(grepl("gunrights", dataTable$Hashtag, ignore.case=T), "Pro gun", 
                   ifelse(grepl("twoadefenders", dataTable$Hashtag, ignore.case=T), "Pro gun", "Ambiguous")))))))))))) 
                     
-                    
+#Split date and time into two different cols
+dataTable$date <- as.Date(dataTable$created)
+#Saves the data file as an output                    
 
 
-if(FALSE){
-
-#--------------------------------------------------------------------------------------------------------------
-
-fs <- list.files(path, pattern = glob2rx("*.csv"))
-for (f in fs) {
-  fname <- file.path(path, f)             ## current file name
-  df <- read.csv(fname)                   ## read file
-  df$id <- NULL                          ## delete column B
-  myDB <- do.call("rbind", lapply(fs, function(x) {
-    dat <- read.csv(x, header=TRUE)
-    dat$fileName <- tools::file_path_sans_ext
-    write.csv(df, fname, row.names = FALSE) ## write it out
-  }))}
-
-Lapply$Source <-tools::file_path_sans_ext
-print(Lapply)
-
-for(i in 1:length(csv.files)){
-  dat <- read.csv("~*.csv", header=TRUE)
-  dat$id <- NULL
-}
-
-myFiles <- list.files(path,pattern=".csv")
-Lapply <- lapply(myFiles, read.csv, header=TRUE)
-
-for(i in myFiles){
-  myFiles$id <-NULL
-}
-
-for (f in myFiles) {
-  fname <- file.path(path, f)             ## current file name
-  df <- read.csv(fname)                   ## read file
-  df$id <- NULL                           ## delete column B
-  df
-}
-
-
-
-names(Lapply) <- myFiles
-
-for(i in myFiles) {
-  Lapply[[i]]$Source = i
-do.call(rbind, Lapply)
-}
-
-print(Lapply)
-
-####THIS Assigns the filename to a column in each dataframe
-myDB <- do.call("rbind", lapply(myFiles, function(x) {
-  dat <- read.csv(x, header=TRUE)
-  dat$fileName <- tools::file_path_sans_ext(basename(x))
-  dat
-}))
-
-View(file)
-View(out.file)
-
-write.table(out.file, file = "cand_Brazil.txt",sep=",", 
-            row.names = FALSE, qmethod = "double",fileEncoding="windows-1252")
-
-
-
-}
